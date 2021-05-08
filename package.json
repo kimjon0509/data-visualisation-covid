@@ -1,0 +1,25 @@
+{
+  "name": "data-visualisation-covid",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kimjon0509/data-visualisation-covid.git"
+  },
+  "author": "johnk928313 <61567448+kimjon0509@users.noreply.github.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kimjon0509/data-visualisation-covid/issues"
+  },
+  "homepage": "https://github.com/kimjon0509/data-visualisation-covid#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "pg": "^8.6.0"
+  },
+  "scripts": {
+    "start": "node server/routes/data.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "description": ""
+}
