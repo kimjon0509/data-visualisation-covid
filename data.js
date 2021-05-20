@@ -6,6 +6,9 @@ const app  = express();
 const http = require('http')
 const server = http.createServer(app)
 
+app.use(express.static(__dirname + '/public'));
+
+
 const { Pool } = require('pg');
 
 const db = new Pool({
@@ -17,7 +20,23 @@ const db = new Pool({
 
 
 db.connect();
+"../"
 
+app.get('/', function(req, res){
+  res.render('../../client/index.html');
+});
+
+app.get("/",(req, res) => {
+
+  db.query(`
+  SELECT * 
+  FROM reported_raw
+  `)
+  .then(data => {
+    res.send(data.rows)
+  })
+
+});
 
 app.get("/reported_raw",(req, res) => {
 
