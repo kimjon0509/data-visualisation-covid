@@ -43,6 +43,25 @@ let figure_1 = async () => {
 
 figure_1()
 
+let figure_2 = async () => {
+  let data = await getData();
+  figure1_data = data_into_array(data);
+  console.log(data)
+
+
+  var body = d3.select('body')
+
+  body.append('div')
+    .selectAll('div')
+    .data(figure1_data[0])
+    .enter()
+    .append('li')
+    .html(String);
+
+}
+
+figure_2()
+
 // var body = d3.select('body')
 
 // body.append('div')
