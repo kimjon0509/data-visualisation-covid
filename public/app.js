@@ -1,13 +1,9 @@
-//get data for figure 1
 let getData = async () => {
   const figure1 = await fetch('/figure1');
   const figure1_data = await figure1.json();
   const figure2 = await fetch('/figure2');
   const figure2_data = await figure2.json();
-  return [figure1_data ,figure2_data];
-  // console.log(figure1_data);
-  // console.log(figure2_data);
-
+  return figure1_data;
 };
 
 let data_into_array = (data) => {
@@ -26,59 +22,35 @@ let figure1_data;
 
 let figure_1 = async () => {
   let data = await getData();
-  figure1_data = data_into_array(data);
-  console.log(data)
+  // dataset = data_into_array(data);
+  grouped = d3.group(data, d => {
+    return d.reported_date
+  });
 
+  let formatted_data = [];
+  let obj = {};
+  let curr_date = 0;
+  data.forEach(d => {
+    // console.log("foreach",d)
+    if (curr_date == 0) {
+      obj[d["reported_date"]] = d.reported_date;
+      obj[d["key"]] = d.count;
+      curr_date = d.reported_date;
+    } else if (d["reported_date"] == curr_date) {
+      obj[d["key"]] = d.count;
+    } else if (d["reported_date"] != curr_date){
+      formatted_data.push(obj);
+      obj = {};
+      obj[d["reported_date"]] = d.reported_date;
+      obj[d["key"]] = d.count;
+      curr_date = d.reported_date;
+    }
+  })
 
-  var body = d3.select('body')
+  // console.log("format", formatted_data.reverse())
 
-  body.append('div')
-    .selectAll('div')
-    .data(figure1_data[0])
-    .enter()
-    .append('li')
-    .html(String);
-
+  const svg = d3.create("svg")
+      .attr("viewBox", [0, 0, width, height]);
 }
 
-figure_1()
-
-let figure_2 = async () => {
-  let data = await getData();
-  figure1_data = data_into_array(data);
-  console.log(data)
-
-
-  var body = d3.select('body')
-
-  body.append('div')
-    .selectAll('div')
-    .data(figure1_data[0])
-    .enter()
-    .append('li')
-    .html(String);
-
-}
-
-figure_2()
-
-// var body = d3.select('body')
-
-// body.append('div')
-//   .selectAll('div')
-//   .data(data)
-//   .enter()
-//   .append('li')
-//   .html(String);
-
-// var names = ['Frank', 'Tom', 'Peter', 'Mary'];
-
-// var ul = d3.select('body').append('ul');
-
-// body.append('ul')
-// .selectAll('li')
-// .data(names)
-// .enter()
-// .append('li')
-// .html(String);
-
+figure_1();
